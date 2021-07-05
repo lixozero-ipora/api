@@ -5,6 +5,7 @@ import 'express-async-errors'
 
 import UserRoutes from './routes/UserRoutes'
 import SessionRoutes from './routes/SessionRoutes'
+import ComplaintRoutes from './routes/ComplaintRoutes'
 import ErrorMiddleware from './middleware/Error'
 import connection from './database/connection'
 
@@ -27,6 +28,7 @@ class App {
   routes() {
     this.server.use(UserRoutes)
     this.server.use(SessionRoutes)
+    this.server.use(ComplaintRoutes)
   }
 
   errorMiddleware() {
