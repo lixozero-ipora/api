@@ -1,0 +1,9 @@
+<%- include('../partials/baseStyle') %>
+
+<%- include('../partials/header', { title: 'Nova ocorrência de denúncia!' }) %>
+
+<div class="container">
+  <p>Uma nova denúncia foi registrada em um mesmo raio onde havia outra denúncia, você pode visualizar sua localização <a href=<%=`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}` %> target="_blank" rel="noopener noreferrer">aqui</a>.</p>
+  <br>
+  <p>Esta denúncia já tem <strong><%= occurrences %></strong> ocorrências. Estas ocorrências ocorrem em um raio de 30 metros.</p>
+</div>

@@ -1,0 +1,7 @@
+<%- include('../partials/baseStyle') %>
+
+<%- include('../partials/header', { title: 'Nova denuncia!' }) %>
+
+<div class="container">
+  <p>Uma nova denúncia foi registrada, você pode visualizar sua localização <a href=<%=`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}` %> target="_blank" rel="noopener noreferrer">aqui</a>.</p>
+</div>
