@@ -13,7 +13,6 @@
     "mongodb": "^3.6.9",
     "nodemailer": "^6.6.2",
     "reflect-metadata": "^0.1.13",
-    "sqlite3": "^5.0.2",
     "typeorm": "^0.2.34"
   },
   "scripts": {
