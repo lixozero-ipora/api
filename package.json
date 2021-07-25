@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
     "dotenv": "^8.6.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
@@ -17,7 +18,8 @@
   },
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "typeorm": "ts-node-dev node_modules/typeorm/cli.js"
+    "typeorm": "ts-node-dev node_modules/typeorm/cli.js",
+    "gen:pass": "ts-node-dev src/utils/genPassword.ts"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

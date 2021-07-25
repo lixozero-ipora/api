@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import 'reflect-metadata'
 import 'express-async-errors'
+import cors from 'cors'
 
 import UserRoutes from './routes/UserRoutes'
 import SessionRoutes from './routes/SessionRoutes'
@@ -23,6 +24,7 @@ class App {
 
   middlewares() {
     this.server.use(express.json())
+    this.server.use(cors('*'))
   }
 
   routes() {
