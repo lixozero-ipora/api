@@ -3,6 +3,8 @@ import ComplaintController from '../controllers/ComplaintController'
 
 const route = Router()
 
-route.post('/complaints', ComplaintController.store)
+const complaintController = new ComplaintController()
+
+route.post('/complaints', complaintController.store)
 
 export default route

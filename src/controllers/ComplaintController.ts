@@ -5,18 +5,22 @@ import { resolve } from 'path'
 
 import ComplaintRepository from '../database/repository/ComplaintRepository'
 import AppError from '../utils/AppError'
-import sendMail from '../utils/sendMail'
-
-interface ComplaintStore {
-  latitude: string
-  longitude: string
-}
+import Citizen from '../database/models/Citizen'
+import { ComplaintStore } from '../@types'
+import Mail from '../services/Mail'
+import Complaint from '../database/models/Complaint.entity'
 
 class ComplaintController {
-  static async store(req: Request, res: Response) {
-    const { latitude: latStr, longitude: longStr } = req.body as ComplaintStore
+  async store(req: Request, res: Response) {
+    const {
+      latitude: latStr,
+      longitude: longStr,
+      name,
+      adress,
+      whatsapp,
+    } = req.body as ComplaintStore
 
-    if (!latStr || !longStr) {
+    if (!latStr || !longStr || !name || !adress || !whatsapp) {
       throw new AppError('missing params', 403)
     }
     const latitude = parseFloat(latStr)
@@ -31,66 +35,61 @@ class ComplaintController {
       },
     })
 
+    const newCitizen = new Citizen(name, adress, whatsapp)
+
+    const mailService = new Mail()
+
     if (complaint) {
       complaint.occurrences += 1
 
-      ComplaintController.sendAddedOccurrenceComplaintEmail({
+      complaint.citizens.push(newCitizen)
+
+      await mailService.sendAddedOccurrenceComplaintEmail({
         latitude,
         longitude,
         occurrences: complaint.occurrences,
+        name,
+        adress,
+        whatsapp,
       })
 
       complaintRepository.save(complaint)
       return res.json({ message: 'complaint added' })
     }
 
-    const newComplaint = complaintRepository.create({
-      latitude,
-      longitude,
-    })
+    const newComplaint = new Complaint()
+
+    newComplaint.latitude = latitude
+    newComplaint.longitude = longitude
+    newComplaint.citizens = [newCitizen]
 
     await complaintRepository.save(newComplaint)
 
-    ComplaintController.sendNewComplaintEmail({ latitude, longitude })
+    await mailService.sendNewComplaintEmail({
+      latitude,
+      longitude,
+      name,
+      adress,
+      whatsapp,
+    })
 
     return res.status(201).json({ message: 'complaint created' })
   }
 
-  static async sendNewComplaintEmail({ latitude, longitude }) {
+  async test(_, res: Response) {
     const html = await ejs.renderFile(
       resolve(__dirname, '..', 'views', 'emails', 'newComplaint.ejs'),
       {
-        latitude,
-        longitude,
+        latitude: -16.4417981,
+        longitude: -51.1191188,
+        occurrences: 2,
+        name: 'Joao',
+        adress: 'Rua dos bobos',
+        whatsapp: '123123',
       }
     )
 
-    await sendMail({
-      html,
-      to: process.env.SMTP_TO,
-      subject: 'Nova denuncia Lixo-Zero Iporá',
-    })
-  }
-
-  static async sendAddedOccurrenceComplaintEmail({
-    latitude,
-    longitude,
-    occurrences,
-  }) {
-    const html = await ejs.renderFile(
-      resolve(__dirname, '..', 'views', 'emails', 'newOccurrenceComplaint.ejs'),
-      {
-        latitude,
-        longitude,
-        occurrences,
-      }
-    )
-
-    await sendMail({
-      html,
-      to: process.env.SMTP_TO,
-      subject: 'Nova ocorrência de denuncia Lixo-Zero Iporá',
-    })
+    return res.send(html)
   }
 }
 
