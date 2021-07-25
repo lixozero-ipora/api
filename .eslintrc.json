@@ -15,7 +15,8 @@
     "semi": "off",
     "no-tabs": "off",
     "import/extensions": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "class-methods-use-this": "off"
   },
   "settings": {
     "import/resolver": {
