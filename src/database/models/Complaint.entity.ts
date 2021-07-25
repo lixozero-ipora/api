@@ -7,6 +7,7 @@ import {
   ObjectIdColumn,
   UpdateDateColumn,
 } from 'typeorm'
+import Citizen from './Citizen'
 
 @Entity('complaint')
 class Complaint {
@@ -21,6 +22,9 @@ class Complaint {
 
   @Column()
   occurrences: number
+
+  @Column(() => Citizen)
+  citizens: Citizen[]
 
   /**
    * Aparently non-string values dont work
