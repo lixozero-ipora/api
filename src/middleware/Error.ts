@@ -7,6 +7,8 @@ function ErrorMiddleware(error, req: Request, res: Response, _) {
     return res.status(error.status).json({ message: error.message })
   }
 
+  console.error(error)
+
   return res.status(500).json({ message: 'an error occurred in the server' })
 }
 
