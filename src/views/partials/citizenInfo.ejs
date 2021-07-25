@@ -1,0 +1,17 @@
+<style>
+  .info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info p {
+    margin: 10px 0;
+  }
+</style>
+
+<div class="info">
+  <p>Os dados da nova pessoa que fez esta nova reclamação estão abaixo.</p>
+  <span>Nome: <%= name %> </span>
+  <span>Endereço: <%= adress %> </span>
+  <span>Whatsapp: <a href=<%= `https://wa.me/+55${whatsapp}` %> target="_blank"><%= whatsapp %></a></span>
+</div>

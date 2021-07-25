@@ -1,7 +1,9 @@
 <%- include('../partials/baseStyle') %>
 
-<%- include('../partials/header', { title: 'Nova denuncia!' }) %>
+<%- include('../partials/header', { title: 'Nova reclamação!' }) %>
 
 <div class="container">
-  <p>Uma nova denúncia foi registrada, você pode visualizar sua localização <a href=<%=`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}` %> target="_blank" rel="noopener noreferrer">aqui</a>.</p>
+  <p>Uma nova reclamação foi registrada, você pode visualizar a localização da reclamação <a href=<%=`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}` %> target="_blank" rel="noopener noreferrer">aqui</a>.</p>
+
+  <%- include('../partials/citizenInfo') %> 
 </div>
