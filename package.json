@@ -19,7 +19,10 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "typeorm": "ts-node-dev node_modules/typeorm/cli.js",
-    "gen:pass": "ts-node-dev src/utils/genPassword.ts"
+    "gen:pass": "ts-node-dev src/utils/genPassword.ts",
+    "create:neighborhoods": "ts-node-dev src/utils/createNeighborhoods",
+    "prestart": "tsc",
+    "start": "node ./dist/src/server.js"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
