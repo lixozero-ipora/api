@@ -1,12 +1,12 @@
-import express from 'express'
-import dotenv from 'dotenv'
 import 'reflect-metadata'
 import 'express-async-errors'
+import express from 'express'
+import dotenv from 'dotenv'
 import cors from 'cors'
 
-import UserRoutes from './routes/UserRoutes'
 import SessionRoutes from './routes/SessionRoutes'
 import ComplaintRoutes from './routes/ComplaintRoutes'
+import ScheduleRoutes from './routes/ScheduleRoutes'
 import ErrorMiddleware from './middleware/Error'
 import connection from './database/connection'
 
@@ -28,9 +28,9 @@ class App {
   }
 
   routes() {
-    this.server.use(UserRoutes)
-    this.server.use(SessionRoutes)
-    this.server.use(ComplaintRoutes)
+    this.server.use('/session', SessionRoutes)
+    this.server.use('/complaint', ComplaintRoutes)
+    this.server.use('/schedules', ScheduleRoutes)
   }
 
   errorMiddleware() {
