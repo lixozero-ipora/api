@@ -4,5 +4,5 @@ module.exports = {
   useNewUrlParser: true,
   synchronize: true,
   useUnifiedTopology: true,
-  entities: ['./src/database/models/*.entity.ts'],
+  entities: ['./**/*.entity.{js,ts}'],
 }
