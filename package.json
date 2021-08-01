@@ -21,7 +21,8 @@
     "typeorm": "ts-node-dev node_modules/typeorm/cli.js",
     "gen:pass": "ts-node-dev src/utils/genPassword.ts",
     "create:neighborhoods": "ts-node-dev src/utils/createNeighborhoods",
-    "prestart": "tsc",
+    "build": "tsc",
+    "postinstall": "npm run build",
     "start": "node ./dist/src/server.js"
   },
   "devDependencies": {
