@@ -5,6 +5,6 @@ const route = Router()
 
 const complaintController = new ComplaintController()
 
-route.post('/complaints', complaintController.store)
+route.post('/', complaintController.store)
 
 export default route
