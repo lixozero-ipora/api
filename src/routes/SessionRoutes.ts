@@ -3,6 +3,6 @@ import SessionController from '../controllers/SessionController'
 
 const route = Router()
 
-route.post('/session', SessionController.store)
+route.post('/', SessionController.store)
 
 export default route
