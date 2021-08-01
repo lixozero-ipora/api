@@ -24,3 +24,10 @@ export interface NewComplaint {
 export interface NewOccurrenceOfComplaint extends NewComplaint {
   occurrences: number
 }
+
+export interface ScheduleToUpdate {
+  id: string
+  neighborhood: string
+  start: string
+  end: string
+}
