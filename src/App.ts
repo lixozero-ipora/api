@@ -29,7 +29,7 @@ class App {
 
   routes() {
     this.server.use('/session', SessionRoutes)
-    this.server.use('/complaint', ComplaintRoutes)
+    this.server.use('/complaints', ComplaintRoutes)
     this.server.use('/schedules', ScheduleRoutes)
   }
 
