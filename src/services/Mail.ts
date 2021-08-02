@@ -28,7 +28,16 @@ export default class Mail {
     description,
   }: NewComplaint) {
     const html = await ejs.renderFile(
-      resolve(__dirname, '..', 'views', 'emails', 'newComplaint.ejs'),
+      resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        'src',
+        'views',
+        'emails',
+        'newComplaint.ejs'
+      ),
       {
         latitude,
         longitude,
@@ -56,7 +65,16 @@ export default class Mail {
     description,
   }: NewOccurrenceOfComplaint) {
     const html = await ejs.renderFile(
-      resolve(__dirname, '..', 'views', 'emails', 'newOccurrenceComplaint.ejs'),
+      resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        'src',
+        'views',
+        'emails',
+        'newOccurrenceComplaint.ejs'
+      ),
       {
         latitude,
         longitude,
