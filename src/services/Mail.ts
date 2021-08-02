@@ -15,8 +15,13 @@ export default class Mail {
       subject,
       html,
     }
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-    return sgMail.send(message)
+    try {
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+      await sgMail.send(message)
+    } catch (error) {
+      return false
+    }
+    return true
   }
 
   public async sendNewComplaintEmail({
