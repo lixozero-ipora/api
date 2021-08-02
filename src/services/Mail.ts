@@ -8,19 +8,14 @@ import {
 } from '../@types'
 
 export default class Mail {
-  constructor() {
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-  }
-
-  async sendMail({ text, html, to, subject }: SendMailProps) {
+  async sendMail({ html, to, subject }: SendMailProps) {
     const message = {
       from: process.env.SMTP_FROM,
       to,
       subject,
-      text,
       html,
     }
-
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY)
     return sgMail.send(message)
   }
 
