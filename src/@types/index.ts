@@ -2,6 +2,7 @@ export interface ComplaintStore {
   name: string
   adress: string
   whatsapp: string
+  description: string
   latitude: string
   longitude: string
 }
@@ -19,6 +20,7 @@ export interface NewComplaint {
   name: string
   adress: string
   whatsapp: string
+  description: string
 }
 
 export interface NewOccurrenceOfComplaint extends NewComplaint {
