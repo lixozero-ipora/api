@@ -18,11 +18,15 @@ class ComplaintController {
       name,
       adress,
       whatsapp,
+      description: descriptionRaw,
     } = req.body as ComplaintStore
 
-    if (!latStr || !longStr || !name || !adress || !whatsapp) {
+    const description = Citizen.validateDescription(descriptionRaw)
+
+    if (!latStr || !longStr || !name || !adress || !whatsapp || !description) {
       throw new AppError('missing params', 403)
     }
+
     const latitude = parseFloat(latStr)
     const longitude = parseFloat(longStr)
 
@@ -35,7 +39,12 @@ class ComplaintController {
       },
     })
 
-    const newCitizen = new Citizen(name, adress, whatsapp)
+    const newCitizen = new Citizen(
+      name,
+      adress,
+      Citizen.validateWhatsapp(whatsapp),
+      description
+    )
 
     const mailService = new Mail()
 
@@ -51,6 +60,7 @@ class ComplaintController {
         name,
         adress,
         whatsapp,
+        description,
       })
 
       complaintRepository.save(complaint)
@@ -71,9 +81,18 @@ class ComplaintController {
       name,
       adress,
       whatsapp,
+      description,
     })
 
     return res.status(201).json({ message: 'complaint created' })
+  }
+
+  async index(_req: Request, res: Response) {
+    const complaintRepository = getCustomRepository(ComplaintRepository)
+
+    const complaints = await complaintRepository.find()
+
+    res.json(complaints)
   }
 
   async test(_, res: Response) {
