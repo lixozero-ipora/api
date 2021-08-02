@@ -41,6 +41,7 @@ export default class Mail {
     name,
     adress,
     whatsapp,
+    description,
   }: NewComplaint) {
     const html = await ejs.renderFile(
       resolve(__dirname, '..', 'views', 'emails', 'newComplaint.ejs'),
@@ -50,6 +51,7 @@ export default class Mail {
         name,
         adress,
         whatsapp,
+        description,
       }
     )
 
@@ -67,6 +69,7 @@ export default class Mail {
     name,
     adress,
     whatsapp,
+    description,
   }: NewOccurrenceOfComplaint) {
     const html = await ejs.renderFile(
       resolve(__dirname, '..', 'views', 'emails', 'newOccurrenceComplaint.ejs'),
@@ -77,6 +80,7 @@ export default class Mail {
         name,
         adress,
         whatsapp,
+        description,
       }
     )
 
