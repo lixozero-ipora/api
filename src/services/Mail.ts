@@ -1,6 +1,6 @@
 import ejs from 'ejs'
 import { resolve } from 'path'
-import nodemailer, { Transporter } from 'nodemailer'
+import sgMail from '@sendgrid/mail'
 import {
   NewComplaint,
   NewOccurrenceOfComplaint,
@@ -8,19 +8,8 @@ import {
 } from '../@types'
 
 export default class Mail {
-  private transport: Transporter
-
-  constructor(
-    baseTransport = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT, 10),
-      auth: {
-        user: process.env.SMTP_AUTH_USER,
-        pass: process.env.SMTP_AUTH_PASS,
-      },
-    })
-  ) {
-    this.transport = baseTransport
+  constructor() {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY)
   }
 
   async sendMail({ text, html, to, subject }: SendMailProps) {
@@ -32,7 +21,7 @@ export default class Mail {
       html,
     }
 
-    return this.transport.sendMail(message)
+    return sgMail.send(message)
   }
 
   public async sendNewComplaintEmail({

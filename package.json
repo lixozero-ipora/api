@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@sendgrid/mail": "^7.4.5",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^8.6.0",
