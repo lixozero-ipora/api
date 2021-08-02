@@ -36,7 +36,7 @@ class Citizen {
   }
 
   static validateWhatsapp(whatsapp: string) {
-    if (whatsapp.length !== 11) {
+    if (whatsapp.length < 8 && whatsapp.length > 15) {
       throw new AppError('whatsapp validation failed')
     }
 
