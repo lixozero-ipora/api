@@ -32,32 +32,37 @@ export default class Mail {
     whatsapp,
     description,
   }: NewComplaint) {
-    const html = await ejs.renderFile(
-      resolve(
-        __dirname,
-        '..',
-        '..',
-        '..',
-        'src',
-        'views',
-        'emails',
-        'newComplaint.ejs'
-      ),
-      {
-        latitude,
-        longitude,
-        name,
-        adress,
-        whatsapp,
-        description,
-      }
-    )
+    try {
+      const html = await ejs.renderFile(
+        resolve(
+          __dirname,
+          '..',
+          '..',
+          '..',
+          'src',
+          'views',
+          'emails',
+          'newComplaint.ejs'
+        ),
+        {
+          latitude,
+          longitude,
+          name,
+          adress,
+          whatsapp,
+          description,
+        }
+      )
 
-    await this.sendMail({
-      html,
-      to: process.env.SMTP_TO,
-      subject: 'Nova reclamação Lixo-Zero Iporá',
-    })
+      await this.sendMail({
+        html,
+        to: process.env.SMTP_TO,
+        subject: 'Nova reclamação Lixo-Zero Iporá',
+      })
+    } catch (error) {
+      console.log(`EMAIL NOT SENT ERROR`)
+      console.error(error)
+    }
   }
 
   public async sendAddedOccurrenceComplaintEmail({
@@ -69,32 +74,37 @@ export default class Mail {
     whatsapp,
     description,
   }: NewOccurrenceOfComplaint) {
-    const html = await ejs.renderFile(
-      resolve(
-        __dirname,
-        '..',
-        '..',
-        '..',
-        'src',
-        'views',
-        'emails',
-        'newOccurrenceComplaint.ejs'
-      ),
-      {
-        latitude,
-        longitude,
-        occurrences,
-        name,
-        adress,
-        whatsapp,
-        description,
-      }
-    )
+    try {
+      const html = await ejs.renderFile(
+        resolve(
+          __dirname,
+          '..',
+          '..',
+          '..',
+          'src',
+          'views',
+          'emails',
+          'newOccurrenceComplaint.ejs'
+        ),
+        {
+          latitude,
+          longitude,
+          occurrences,
+          name,
+          adress,
+          whatsapp,
+          description,
+        }
+      )
 
-    await this.sendMail({
-      html,
-      to: process.env.SMTP_TO,
-      subject: 'Nova ocorrência de reclamação Lixo-Zero Iporá',
-    })
+      await this.sendMail({
+        html,
+        to: process.env.SMTP_TO,
+        subject: 'Nova ocorrência de reclamação Lixo-Zero Iporá',
+      })
+    } catch (error) {
+      console.log(`EMAIL NOT SENT ERROR`)
+      console.error(error)
+    }
   }
 }
