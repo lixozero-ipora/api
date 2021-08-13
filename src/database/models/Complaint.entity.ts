@@ -24,7 +24,13 @@ class Complaint {
   occurrences: number
 
   @Column(() => Citizen)
-  citizens: Citizen[]
+  active: Citizen[]
+
+  @Column(() => Citizen)
+  solved: Citizen[]
+
+  @Column()
+  has_active_complaints: boolean
 
   /**
    * Aparently non-string values dont work
@@ -33,6 +39,7 @@ class Complaint {
   @BeforeInsert()
   beforeInsertHook() {
     this.occurrences = 1
+    this.solved = []
   }
 
   @CreateDateColumn({ type: 'datetime', default: () => '$currentDate' })

@@ -16,7 +16,10 @@ class Citizen {
   description: string
 
   @CreateDateColumn()
-  created_at: string
+  created_at: Date
+
+  @Column({ type: 'timestamptz' })
+  solved_at: Date
 
   constructor(
     name: string,
@@ -28,7 +31,8 @@ class Citizen {
     this.adress = adress
     this.whatsapp = whatsapp
     this.description = description
-    this.created_at = new Date().toISOString()
+    this.created_at = new Date()
+    this.solved_at = null
   }
 
   static validateDescription(description: string) {

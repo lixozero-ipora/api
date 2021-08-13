@@ -51,7 +51,7 @@ class ComplaintController {
     if (complaint) {
       complaint.occurrences += 1
 
-      complaint.citizens.push(newCitizen)
+      complaint.active.push(newCitizen)
 
       await mailService.sendAddedOccurrenceComplaintEmail({
         latitude,
@@ -71,7 +71,8 @@ class ComplaintController {
 
     newComplaint.latitude = latitude
     newComplaint.longitude = longitude
-    newComplaint.citizens = [newCitizen]
+    newComplaint.active = [newCitizen]
+    newComplaint.has_active_complaints = true
 
     await complaintRepository.save(newComplaint)
 
@@ -93,6 +94,45 @@ class ComplaintController {
     const complaints = await complaintRepository.find()
 
     res.json(complaints)
+  }
+
+  async solve(req: Request, res: Response) {
+    const { complaintId } = req.params
+    const { solvedIndex: solvedIndexRaw, whatsapp } = req.body
+
+    const solvedIndex = parseInt(solvedIndexRaw, 10)
+
+    const complaintRepository = getCustomRepository(ComplaintRepository)
+
+    const complaint = await complaintRepository.findOne(complaintId)
+
+    if (!complaint) {
+      throw new AppError('complaint not found', 400)
+    }
+
+    const solvedCitizen = complaint.active.slice(
+      solvedIndex,
+      solvedIndex + 1
+    )[0]
+    solvedCitizen.solved_at = new Date()
+
+    /**
+     * Whatsapp mismatch, incorrect index for this active complaint
+     */
+    if (solvedCitizen.whatsapp !== whatsapp) {
+      throw new AppError('whatsapp and index mismatch')
+    }
+
+    complaint.active.splice(solvedIndex, 1)
+    complaint.solved.push(solvedCitizen)
+
+    if (!complaint.active.length) {
+      complaint.has_active_complaints = false
+    }
+
+    await complaintRepository.save(complaint)
+
+    return res.sendStatus(200)
   }
 
   async test(_, res: Response) {
