@@ -8,6 +8,8 @@ const complaintController = new ComplaintController()
 
 route.post('/', complaintController.store)
 route.get('/', authMiddleware, complaintController.index)
+route.get('/:id', authMiddleware, complaintController.show)
 route.put('/:complaintId', authMiddleware, complaintController.solve)
+route.put('/:complaintId/unsolve', authMiddleware, complaintController.unsolve)
 
 export default route
