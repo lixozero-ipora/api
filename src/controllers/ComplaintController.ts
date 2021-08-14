@@ -142,7 +142,7 @@ class ComplaintController {
 
     await complaintRepository.save(complaint)
 
-    return res.sendStatus(200)
+    return res.json(complaint)
   }
 
   async unsolve(req: Request, res: Response) {
@@ -178,7 +178,7 @@ class ComplaintController {
 
     await complaintRepository.save(complaint)
 
-    return res.sendStatus(200)
+    return res.json(complaint)
   }
 
   async test(_, res: Response) {
