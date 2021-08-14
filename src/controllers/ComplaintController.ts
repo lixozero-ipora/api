@@ -96,6 +96,16 @@ class ComplaintController {
     res.json(complaints)
   }
 
+  async show(req: Request, res: Response) {
+    const { id } = req.params
+
+    const complaintRepository = getCustomRepository(ComplaintRepository)
+
+    const complaint = await complaintRepository.findOne(id)
+
+    res.json(complaint)
+  }
+
   async solve(req: Request, res: Response) {
     const { complaintId } = req.params
     const { solvedIndex: solvedIndexRaw, whatsapp } = req.body
@@ -129,6 +139,42 @@ class ComplaintController {
     if (!complaint.active.length) {
       complaint.has_active_complaints = false
     }
+
+    await complaintRepository.save(complaint)
+
+    return res.sendStatus(200)
+  }
+
+  async unsolve(req: Request, res: Response) {
+    const { complaintId } = req.params
+    const { solvedIndex: solvedIndexRaw, whatsapp } = req.body
+
+    const solvedIndex = parseInt(solvedIndexRaw, 10)
+
+    const complaintRepository = getCustomRepository(ComplaintRepository)
+
+    const complaint = await complaintRepository.findOne(complaintId)
+
+    if (!complaint) {
+      throw new AppError('complaint not found', 400)
+    }
+
+    const solvedCitizen = complaint.solved.slice(
+      solvedIndex,
+      solvedIndex + 1
+    )[0]
+    solvedCitizen.solved_at = null
+
+    /**
+     * Whatsapp mismatch, incorrect index for this active complaint
+     */
+    if (solvedCitizen.whatsapp !== whatsapp) {
+      throw new AppError('whatsapp and index mismatch')
+    }
+
+    complaint.solved.splice(solvedIndex, 1)
+    complaint.active.push(solvedCitizen)
+    complaint.has_active_complaints = true
 
     await complaintRepository.save(complaint)
 
