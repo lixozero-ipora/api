@@ -1,5 +1,6 @@
 export interface ComplaintStore {
   name: string
+  neighborhood: string
   adress: string
   whatsapp: string
   description: string

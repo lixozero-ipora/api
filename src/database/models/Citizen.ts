@@ -4,6 +4,9 @@ import AppError from '../../utils/AppError'
 @Entity()
 class Citizen {
   @Column()
+  neighborhood: string
+
+  @Column()
   adress: string
 
   @Column()
@@ -23,6 +26,7 @@ class Citizen {
 
   constructor(
     name: string,
+    neighborhood: string,
     adress: string,
     whatsapp: string,
     description: string
@@ -31,6 +35,7 @@ class Citizen {
     this.adress = adress
     this.whatsapp = whatsapp
     this.description = description
+    this.neighborhood = neighborhood
     this.created_at = new Date()
     this.solved_at = null
   }

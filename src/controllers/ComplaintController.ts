@@ -9,6 +9,7 @@ import Citizen from '../database/models/Citizen'
 import { ComplaintStore } from '../@types'
 import Mail from '../services/Mail'
 import Complaint from '../database/models/Complaint.entity'
+import iporaNeighborhoods from '../utils/iporaNeighborhoods.json'
 
 class ComplaintController {
   async store(req: Request, res: Response) {
@@ -16,6 +17,7 @@ class ComplaintController {
       latitude: latStr,
       longitude: longStr,
       name,
+      neighborhood,
       adress,
       whatsapp,
       description: descriptionRaw,
@@ -25,6 +27,10 @@ class ComplaintController {
 
     if (!latStr || !longStr || !name || !adress || !whatsapp || !description) {
       throw new AppError('missing params', 403)
+    }
+
+    if (!iporaNeighborhoods.includes(neighborhood)) {
+      throw new AppError('unknown neighborhood')
     }
 
     const latitude = parseFloat(latStr)
@@ -41,6 +47,7 @@ class ComplaintController {
 
     const newCitizen = new Citizen(
       name,
+      neighborhood,
       adress,
       Citizen.validateWhatsapp(whatsapp),
       description
