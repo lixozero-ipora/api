@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import xlsx from 'node-xlsx'
-import { writeFile, unlink } from 'fs/promises'
+import { writeFile } from 'fs/promises'
 import { resolve } from 'path'
 import { getCustomRepository } from 'typeorm'
 import ComplaintRepository from '../database/repository/ComplaintRepository'
@@ -86,8 +86,6 @@ class ReportController {
     await writeFile(relatoryFile, buffer)
 
     res.download(relatoryFile)
-
-    await unlink(relatoryFile)
   }
 }
 
