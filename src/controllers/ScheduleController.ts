@@ -7,7 +7,9 @@ class ScheduleController {
   async index(_, res: Response) {
     const scheduleRepository = getCustomRepository(ScheduleRepository)
 
-    const schedules = await scheduleRepository.find()
+    const schedules = await scheduleRepository.find({
+      order: { updated_at: 'DESC' },
+    })
 
     return res.json(schedules)
   }
