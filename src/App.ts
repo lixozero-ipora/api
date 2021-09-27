@@ -11,7 +11,7 @@ import ReportRoutes from './routes/ReportRoutes'
 import ErrorMiddleware from './middleware/Error'
 import connection from './database/connection'
 
-import './utils/keepAlive'
+// import './utils/keepAlive'
 
 connection()
 
